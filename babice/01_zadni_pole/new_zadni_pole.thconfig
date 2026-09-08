@@ -1,7 +1,69 @@
 encoding utf-8
 input ../../layouts
 source zadni_pole.th
-select zadni_pole.m@zadni_pole
+
+source
+  scrap new_bbox_scrap -projection plan -scale [-128 -2296 4890 -2296 0.0 0.0 127.4572 0.0 m]
+    point 326.75 937.0 station -name 1318@povrch1.zadni_pole
+    point 308.25 867.5 station -name 18@povrch1.zadni_pole
+    point 342.5 949.25 station -name 1303@povrch1.zadni_pole
+    point 241.0 930.25 station -name 1320@povrch1.zadni_pole
+
+    # Západní závrt (Devítka)
+    line wall -visibility off
+      185 820
+      245 820
+      245 885
+      185 885
+      185 820
+    endline
+
+    # Severní závrt (nad Větrnou propastí)
+    line wall -visibility off
+      298 990
+      325 990
+      325 1025
+      298 1025
+      298 990
+    endline
+
+    # Východní závrt (Dvanáctka): přidání cca 20 m prostoru na východní straně
+    line wall -visibility off
+      330 935
+      365 935
+      365 965
+      330 965
+      330 935
+    endline
+
+    # Jižní závrt (Závrt 11): přidání cca 20 m prostoru na jižní straně
+    line wall -visibility off
+      238 760
+      295 760
+      295 830
+      238 830
+      238 760
+    endline
+  endscrap
+
+  map new_bbox.m
+    new_bbox_scrap
+  endmap
+
+  map new_zadni_pole.m -title "Závrtová skupina Zadní pole"
+    new_bbox.m
+    break
+    zadni_pole_povrch.m@zadni_pole
+    break
+    1319.m@1319.zadni_pole
+    break
+    1303.m@1303.zadni_pole
+    break
+    1318.m@1318.zadni_pole
+  endmap
+endsource
+
+select new_zadni_pole.m
 
 
 layout new_layout_zadni_pole
@@ -72,8 +134,6 @@ layout new_layout_zadni_pole
     \let\origmaplayout=\maplayout
     \def\maplayout{%
       \origmaplayout
-      \global\advance\extraS by 8cm
-      \global\advance\extraE by 8cm
       \ifnortharrow
         \legendbox{95}{5}{SE}{%
           \vbox{%
@@ -103,12 +163,38 @@ layout new_layout_zadni_pole
   endcode
 
   code metapost
+    let orig_draw_downscrap = draw_downscrap;
+    def draw_downscrap =
+      if current_scrap = "new_bbox_scrap":
+        bg_name := jobname & "." & decimal(charcode) & "bg";
+        clip_name := jobname & "." & decimal(charcode) & "clip";
+        write "%!PS" to bg_name;
+        write "%%BoundingBox: 0 0 1 1" to bg_name;
+        write "%%Page: 1 1" to bg_name;
+        write "newpath" to bg_name;
+        write "showpage" to bg_name;
+        write "%%EOF" to bg_name;
+        write EOF to bg_name;
+        write EOF to clip_name;
+        bgfill:=nullpicture;
+      else:
+        orig_draw_downscrap;
+      fi;
+    enddef;
+
     def l_border (expr P) =
       T:=identity;
       pickup PenC;
       draw P withcolor (0.55, 0.55, 0.55);
     enddef;
     initsymbol("l_border");
+
+    def l_border_visible (expr P) =
+      T:=identity;
+      pickup PenC;
+      draw P withcolor (0.55, 0.55, 0.55);
+    enddef;
+    initsymbol("l_border_visible");
   endcode
 
   doc-author "ZO ČSS 6-28 Babická speleologická skupina"
