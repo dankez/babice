@@ -161,52 +161,129 @@ layout l_pub
 
   code metapost
     def s_northarrow_PUB (expr rot) =
-      T:=identity scaled 0.65 rotated -rot;
-      pickup PenC;
-      thfill (-0.35cm,-0.7cm)--(0,1.3cm)--(0,-0.35cm)--cycle withcolor (0.15, 0.15, 0.15);
-      thfill (0.35cm,-0.7cm)--(0,1.3cm)--(0,-0.35cm)--cycle withcolor (1, 1, 1);
-      thdraw (-0.35cm,-0.7cm)--(0,1.3cm)--(0.35cm,-0.7cm)--(0,-0.35cm)--cycle withcolor (0.15, 0.15, 0.15);
-      thdraw (0,-0.35cm)--(0,1.3cm) withcolor (0.15, 0.15, 0.15);
+      begingroup
+        save r_n, r_card, r_ord, r_in;
+        numeric r_n, r_card, r_ord, r_in;
+        r_n := 1.7cm;     % North tip length
+        r_card := 1.15cm; % E, S, W tip length
+        r_ord := 0.7cm;   % NE, NW, SE, SW tip length
+        r_in := 0.20cm;   % inner hub width
+
+        T := identity rotated -rot;
+        pickup pencircle scaled 0.5bp;
+
+        % 4 Ordinal rays (NE, NW, SW, SE)
+        % NE
+        thfill (0,0) -- (r_ord*0.7071, r_ord*0.7071) -- (r_in*0.7071, 0) -- cycle withcolor (0.25, 0.25, 0.25);
+        thfill (0,0) -- (r_ord*0.7071, r_ord*0.7071) -- (0, r_in*0.7071) -- cycle withcolor (1, 1, 1);
+        thdraw (0,0) -- (r_ord*0.7071, r_ord*0.7071) -- (r_in*0.7071, 0) -- cycle withcolor (0.1, 0.1, 0.1);
+        thdraw (0,0) -- (r_ord*0.7071, r_ord*0.7071) -- (0, r_in*0.7071) -- cycle withcolor (0.1, 0.1, 0.1);
+
+        % NW
+        thfill (0,0) -- (-r_ord*0.7071, r_ord*0.7071) -- (0, r_in*0.7071) -- cycle withcolor (0.25, 0.25, 0.25);
+        thfill (0,0) -- (-r_ord*0.7071, r_ord*0.7071) -- (-r_in*0.7071, 0) -- cycle withcolor (1, 1, 1);
+        thdraw (0,0) -- (-r_ord*0.7071, r_ord*0.7071) -- (0, r_in*0.7071) -- cycle withcolor (0.1, 0.1, 0.1);
+        thdraw (0,0) -- (-r_ord*0.7071, r_ord*0.7071) -- (-r_in*0.7071, 0) -- cycle withcolor (0.1, 0.1, 0.1);
+
+        % SW
+        thfill (0,0) -- (-r_ord*0.7071, -r_ord*0.7071) -- (-r_in*0.7071, 0) -- cycle withcolor (0.25, 0.25, 0.25);
+        thfill (0,0) -- (-r_ord*0.7071, -r_ord*0.7071) -- (0, -r_in*0.7071) -- cycle withcolor (1, 1, 1);
+        thdraw (0,0) -- (-r_ord*0.7071, -r_ord*0.7071) -- (-r_in*0.7071, 0) -- cycle withcolor (0.1, 0.1, 0.1);
+        thdraw (0,0) -- (-r_ord*0.7071, -r_ord*0.7071) -- (0, -r_in*0.7071) -- cycle withcolor (0.1, 0.1, 0.1);
+
+        % SE
+        thfill (0,0) -- (r_ord*0.7071, -r_ord*0.7071) -- (0, -r_in*0.7071) -- cycle withcolor (0.25, 0.25, 0.25);
+        thfill (0,0) -- (r_ord*0.7071, -r_ord*0.7071) -- (r_in*0.7071, 0) -- cycle withcolor (1, 1, 1);
+        thdraw (0,0) -- (r_ord*0.7071, -r_ord*0.7071) -- (0, -r_in*0.7071) -- cycle withcolor (0.1, 0.1, 0.1);
+        thdraw (0,0) -- (r_ord*0.7071, -r_ord*0.7071) -- (r_in*0.7071, 0) -- cycle withcolor (0.1, 0.1, 0.1);
+
+        % 3 Cardinal rays (East, South, West)
+        % East
+        thfill (0,0) -- (r_card, 0) -- (0, r_in) -- cycle withcolor (1, 1, 1);
+        thfill (0,0) -- (r_card, 0) -- (0, -r_in) -- cycle withcolor (0.15, 0.15, 0.15);
+        thdraw (0,0) -- (r_card, 0) -- (0, r_in) -- cycle withcolor (0.1, 0.1, 0.1);
+        thdraw (0,0) -- (r_card, 0) -- (0, -r_in) -- cycle withcolor (0.1, 0.1, 0.1);
+
+        % West
+        thfill (0,0) -- (-r_card, 0) -- (0, -r_in) -- cycle withcolor (1, 1, 1);
+        thfill (0,0) -- (-r_card, 0) -- (0, r_in) -- cycle withcolor (0.15, 0.15, 0.15);
+        thdraw (0,0) -- (-r_card, 0) -- (0, -r_in) -- cycle withcolor (0.1, 0.1, 0.1);
+        thdraw (0,0) -- (-r_card, 0) -- (0, r_in) -- cycle withcolor (0.1, 0.1, 0.1);
+
+        % South
+        thfill (0,0) -- (0, -r_card) -- (r_in, 0) -- cycle withcolor (1, 1, 1);
+        thfill (0,0) -- (0, -r_card) -- (-r_in, 0) -- cycle withcolor (0.15, 0.15, 0.15);
+        thdraw (0,0) -- (0, -r_card) -- (r_in, 0) -- cycle withcolor (0.1, 0.1, 0.1);
+        thdraw (0,0) -- (0, -r_card) -- (-r_in, 0) -- cycle withcolor (0.1, 0.1, 0.1);
+
+        % Major North ray (prominent, half black, half white)
+        thfill (0,0) -- (0, r_n) -- (-r_in, 0) -- cycle withcolor (0.1, 0.1, 0.1);
+        thfill (0,0) -- (0, r_n) -- (r_in, 0) -- cycle withcolor (1, 1, 1);
+        thdraw (0,0) -- (0, r_n) -- (-r_in, 0) -- cycle withcolor (0.1, 0.1, 0.1);
+        thdraw (0,0) -- (0, r_n) -- (r_in, 0) -- cycle withcolor (0.1, 0.1, 0.1);
+
+        % Central ring and hub
+        pickup pencircle scaled 0.6bp;
+        thdraw fullcircle scaled (2 * r_in) withcolor (0.1, 0.1, 0.1);
+        thfill fullcircle scaled (0.8 * r_in) withcolor (0.1, 0.1, 0.1);
+
+        % Letter N
+        label.top(thTEX("\size[11]\bf N"), (0, r_n + 2bp));
+      endgroup
     enddef;
     initsymbol("s_northarrow_PUB");
 
     def s_scalebar_PUB (expr l, units, txt) =
       begingroup
-        save sb_l, sb_h, sb_i, p_a, p_b, p_c, p_d;
-        numeric sb_l, sb_h, sb_i;
-        pair p_a, p_b, p_c, p_d;
+        interim warningcheck := 0;
+        save tmpl, tmpx, tmph, p;
+        numeric tmpl, tmpx, tmph;
+        path p;
 
-        sb_l := l / Scale * cm * units;
-        sb_h := 3.2bp;
+        T := identity;
+        tmpl := l / Scale * cm * units / 2; % half of total length (e.g. 4.0 cm at 1:250)
+        tmpx := tmpl / 2;                  % quarter of total length (e.g. 2.0 cm)
+        tmph := 3.5bp;                     % bar height
 
         pickup pencircle scaled 0.4bp;
 
-        for sb_i = 0 upto 3:
-          p_a := (sb_i * sb_l / 4, 0);
-          p_b := ((sb_i + 1) * sb_l / 4, 0);
-          p_c := ((sb_i + 1) * sb_l / 4, sb_h);
-          p_d := (sb_i * sb_l / 4, sb_h);
+        % Block 1: [0 to l/4] -> [-tmpl to -tmpx] (black)
+        p := (-tmpl, 0) -- (-tmpx, 0) -- (-tmpx, tmph) -- (-tmpl, tmph) -- cycle;
+        fill p withcolor (0.12, 0.12, 0.12);
+        draw p withcolor (0.12, 0.12, 0.12);
 
-          if ((sb_i = 0) or (sb_i = 2)):
-            thfill (p_a -- p_b -- p_c -- p_d -- cycle) withcolor (0.15, 0.15, 0.15);
-          else:
-            thfill (p_a -- p_b -- p_c -- p_d -- cycle) withcolor (1, 1, 1);
-          fi;
-          thdraw (p_a -- p_b -- p_c -- p_d -- cycle) withcolor (0.15, 0.15, 0.15);
-        endfor;
+        % Block 2: [l/4 to l/2] -> [-tmpx to 0] (white)
+        p := (-tmpx, 0) -- (0, 0) -- (0, tmph) -- (-tmpx, tmph) -- cycle;
+        fill p withcolor (1, 1, 1);
+        draw p withcolor (0.12, 0.12, 0.12);
 
-        draw (0, 0) -- (0, -2.5bp) withcolor (0.15, 0.15, 0.15);
-        draw (sb_l / 4, 0) -- (sb_l / 4, -2.5bp) withcolor (0.15, 0.15, 0.15);
-        draw (sb_l / 2, 0) -- (sb_l / 2, -2.5bp) withcolor (0.15, 0.15, 0.15);
-        draw (sb_l, 0) -- (sb_l, -2.5bp) withcolor (0.15, 0.15, 0.15);
+        % Block 3: [l/2 to 3l/4] -> [0 to tmpx] (black)
+        p := (0, 0) -- (tmpx, 0) -- (tmpx, tmph) -- (0, tmph) -- cycle;
+        fill p withcolor (0.12, 0.12, 0.12);
+        draw p withcolor (0.12, 0.12, 0.12);
 
+        % Block 4: [3l/4 to l] -> [tmpx to tmpl] (white)
+        p := (tmpx, 0) -- (tmpl, 0) -- (tmpl, tmph) -- (tmpx, tmph) -- cycle;
+        fill p withcolor (1, 1, 1);
+        draw p withcolor (0.12, 0.12, 0.12);
+
+        % Downward tick marks
+        draw (-tmpl, 0) -- (-tmpl, -2.5bp) withcolor (0.12, 0.12, 0.12);
+        draw (-tmpx, 0) -- (-tmpx, -2.5bp) withcolor (0.12, 0.12, 0.12);
+        draw (0, 0) -- (0, -2.5bp) withcolor (0.12, 0.12, 0.12);
+        draw (tmpx, 0) -- (tmpx, -2.5bp) withcolor (0.12, 0.12, 0.12);
+        draw (tmpl, 0) -- (tmpl, -2.5bp) withcolor (0.12, 0.12, 0.12);
+
+        % Numeric labels
         interim labeloffset := 3.5bp;
-        label.bot(thTEX("\size[8]0"), (0, -2.5bp));
-        label.bot(thTEX("\size[8]" & decimal (round(l / 4))), (sb_l / 4, -2.5bp));
-        label.bot(thTEX("\size[8]" & decimal (round(l / 2))), (sb_l / 2, -2.5bp));
-        label.bot(thTEX("\size[8]" & decimal (round(l)) & "\thinspace" & txt), (sb_l, -2.5bp));
+        label.bot(thTEX("\size[8]0"), (-tmpl, -2.5bp));
+        label.bot(thTEX("\size[8]" & decimal round(l/4)), (-tmpx, -2.5bp));
+        label.bot(thTEX("\size[8]" & decimal round(l/2)), (0, -2.5bp));
+        label.bot(thTEX("\size[8]" & decimal round(3*l/4)), (tmpx, -2.5bp));
+        label.bot(thTEX("\size[8]" & decimal round(l) & "\thinspace" & txt), (tmpl, -2.5bp));
 
-        label.top(thTEX("\size[8.5]\bf 1 : " & decimal round(Scale * 100)), (sb_l / 2, sb_h + 1.5bp));
+        % Ratio label on top
+        label.top(thTEX("\size[8.5]\bf 1 : " & decimal round(Scale * 100)), (0, tmph + 1.5bp));
       endgroup
     enddef;
     initsymbol("s_scalebar_PUB");

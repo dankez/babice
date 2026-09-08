@@ -47,7 +47,6 @@ layout new_layout_zadni_pole
     \legendcontent={%
       \hsize=\legendwidth
       \color[0 0 0]\the\legendtextcolor
-      \ifnortharrow\vbox to 0pt{\line{\hfil\northarrow}\vss}\fi
       
       {\the\legendtextheadersize\bf ZÁVRTOVÁ SKUPINA ZADNÍ POLE}\vskip2mm
       {\size[10]\it Babická plošina \enspace|\enspace Moravský kras \enspace|\enspace k. ú. Babice nad Svitavou}\vskip1mm
@@ -74,13 +73,30 @@ layout new_layout_zadni_pole
       \origmaplayout
       \advance\extraS by 2.5cm
       \advance\extraE by 2.5cm
-      \ifcolorlegend
+      \ifnortharrow
         \legendbox{95}{5}{SE}{%
-          \hsize=4.5cm
-          \color[0 0 0]
-          {\the\legendtextsectionsize\bf\the\colorlegendtitle}\vskip2mm
-          \insertcolorlegend
+          \vbox{%
+            \hsize=4.5cm
+            \centerline{\northarrow}%
+            \ifcolorlegend
+              \vskip6mm
+              \centerline{{\the\legendtextsectionsize\bf\the\colorlegendtitle}}%
+              \vskip1mm
+              \hbox to \hsize{\hss\vbox{\insertcolorlegend}\hss}%
+            \fi
+          }%
         }%
+      \else
+        \ifcolorlegend
+          \legendbox{95}{5}{SE}{%
+            \vbox{%
+              \hsize=4.5cm
+              \centerline{{\the\legendtextsectionsize\bf\the\colorlegendtitle}}%
+              \vskip1mm
+              \hbox to \hsize{\hss\vbox{\insertcolorlegend}\hss}%
+            }%
+          }%
+        \fi
       \fi
     }
   endcode
@@ -114,34 +130,6 @@ layout new_layout_zadni_pole_tech
   grid-coords off
   code tex-map
     \framethickness=0.8mm
-    \legendtextheadersize={\size[16]}
-    \legendtextsectionsize={\size[10]}
-    \legendtextsize={\size[8]}
-
-    \legendcontent={%
-      \hsize=\legendwidth
-      \color[0 0 0]\the\legendtextcolor
-      \ifnortharrow\vbox to 0pt{\line{\hfil\northarrow}\vss}\fi
-      
-      {\the\legendtextheadersize\bf ZÁVRTOVÁ SKUPINA ZADNÍ POLE}\vskip2mm
-      {\size[10]\it Babická plošina \enspace|\enspace Moravský kras \enspace|\enspace k. ú. Babice nad Svitavou}\vskip1mm
-      {\size[8.5]\rm Jeskyně 1318 Větrná propast \enspace|\enspace 1303 Dvanáctka \enspace|\enspace 1319 Devítka}\vskip3mm
-      
-      \ifscalebar\scalebar\vskip4mm\fi
-      
-      {\rightskip=0pt plus 2em\parskip=2bp\size[8]
-        \everypar{\hangindent=1.5em\hangafter=1}
-        {\bf Celková délka polygonu skupiny:} \ss 934 m\par
-        {\bf Hloubka / denivelace:} \ss 124,5 m\par
-        {\bf Nadmořská výška vchodů:} \ss 526--528 m n. m.\par
-        {\bf Měřické práce a mapování:} \rm ZO ČSS 6-28 Babická speleologická skupina (1974-2022)\par
-        {\bf Zpracování dat a kartografie:} \rm Therion (2026)\par
-      }\vskip3mm
-      
-      {\the\legendtextsectionsize\bf VYSVĚTLIVKY}\vskip1.5mm
-      {\size[7.5]\formattedlegend}\vskip2mm
-      \color[0 0 0]
-    }
   endcode
 endlayout
 
