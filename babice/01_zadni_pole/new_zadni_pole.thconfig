@@ -1,38 +1,7 @@
 encoding utf-8
 input ../../layouts
 source zadni_pole.th
-source
-  scrap new_bbox_scrap -projection plan -scale [-128 -2296 4890 -2296 0.0 0.0 127.4572 0.0 m]
-    point 326.75 937.0 station -name 1318@povrch1.zadni_pole
-    point 308.25 867.5 station -name 18@povrch1.zadni_pole
-    point 342.5 949.25 station -name 1303@povrch1.zadni_pole
-    point 241.0 930.25 station -name 1320@povrch1.zadni_pole
-    line wall -visibility off
-      180 755
-      365 755
-      365 1030
-      180 1030
-    endline
-  endscrap
-
-  map new_bbox.m
-    new_bbox_scrap
-  endmap
-
-  map new_zadni_pole.m -title "Závrtová skupina Zadní pole"
-    new_bbox.m
-    break
-    zadni_pole_povrch.m@zadni_pole
-    break
-    1319.m@1319.zadni_pole
-    break
-    1303.m@1303.zadni_pole
-    break
-    1318.m@1318.zadni_pole
-  endmap
-endsource
-
-select new_zadni_pole.m
+select zadni_pole.m@zadni_pole
 
 
 layout new_layout_zadni_pole
@@ -103,8 +72,8 @@ layout new_layout_zadni_pole
     \let\origmaplayout=\maplayout
     \def\maplayout{%
       \origmaplayout
-      \advance\extraS by 2.5cm
-      \advance\extraE by 2.5cm
+      \global\advance\extraS by 8cm
+      \global\advance\extraE by 8cm
       \ifnortharrow
         \legendbox{95}{5}{SE}{%
           \vbox{%
@@ -134,25 +103,6 @@ layout new_layout_zadni_pole
   endcode
 
   code metapost
-    let orig_draw_downscrap = draw_downscrap;
-    def draw_downscrap =
-      if current_scrap = "new_bbox_scrap":
-        bg_name := jobname & "." & decimal(charcode) & "bg";
-        clip_name := jobname & "." & decimal(charcode) & "clip";
-        write "%!PS" to bg_name;
-        write "%%BoundingBox: 0 0 1 1" to bg_name;
-        write "%%Page: 1 1" to bg_name;
-        write "newpath" to bg_name;
-        write "showpage" to bg_name;
-        write "%%EOF" to bg_name;
-        write EOF to bg_name;
-        write EOF to clip_name;
-        bgfill:=nullpicture;
-      else:
-        orig_draw_downscrap;
-      fi;
-    enddef;
-
     def l_border (expr P) =
       T:=identity;
       pickup PenC;
