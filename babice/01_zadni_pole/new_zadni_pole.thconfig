@@ -70,6 +70,15 @@ layout new_layout_zadni_pole
     }
   endcode
 
+  code metapost
+    def l_border (expr P) =
+      T:=identity;
+      pickup PenC;
+      draw P withcolor (0.55, 0.55, 0.55);
+    enddef;
+    initsymbol("l_border");
+  endcode
+
   doc-author "ZO ČSS 6-28 Babická speleologická skupina"
   doc-keywords "Zadní pole, Babická plošina, Moravský kras, Větrná propast, Dvanáctka, Devítka"
   doc-subject "Plán závrtové skupiny Zadní pole"
@@ -84,6 +93,7 @@ endlayout
 
 layout new_layout_zadni_pole_tech
   copy new_layout_zadni_pole
+  map-header-bg on
   grid bottom
   grid-size 25 25 25 m
   grid-coords off

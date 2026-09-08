@@ -13,7 +13,7 @@ point 308.25 867.5 station -name 18@povrch1
 
 point 342.5 949.25 station -name 1303@povrch1
 
-line wall -close off
+line border -close off
   312.0 1018.0
   312.0 1018.0 308.0 1008.5 305.5 1006.0
   303.0 1003.5 301.5 998.0 304.0 996.0
@@ -21,13 +21,13 @@ line wall -close off
   320.0 1013.0 321.5 1021.0 312.0 1018.0
 endline
 
-line wall -close on
+line border -close on
   346.5 954.25
   339.75 959.75 330.5 949.0 337.5 943.25
   343.77 938.1 354.13 948.03 346.5 954.25
 endline
 
-line wall -close on
+line border -close on
   304.75 879.25
   304.75 879.25 270.75 892.5 293.75 866.25
   smooth off
@@ -36,13 +36,13 @@ line wall -close on
   smooth off
 endline
 
-line wall -close on -reverse on
+line border -close on -reverse on
   203.25 846.5
   190.39 864.04 204.75 879.75 221.75 871.25
   242.11 861.07 218.28 826.01 203.25 846.5
 endline
 
-line wall -close on
+line border -close on
   325.25 938.25
   322.75 935.5 326.75 933.3 328.25 935.25
   330.74 938.48 326.53 939.66 325.25 938.25
@@ -50,7 +50,7 @@ endline
 
 point 241.0 930.25 station -name 1320@povrch1
 
-line wall -close on -reverse on
+line border -close on -reverse on
   251.75 814.5
   251.75 814.5 265.75 826.5 281.25 806.5
   291.39 793.41 290.0 783.5 288.75 781.0
@@ -59,7 +59,7 @@ line wall -close on -reverse on
   smooth off
 endline
 
-line wall -close on
+line border -close on
   238.5 932.75
   236.9 931.15 239.0 924.5 243.5 928.25
   246.67 930.89 241.0 935.25 238.5 932.75

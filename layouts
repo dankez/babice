@@ -223,6 +223,7 @@ endlayout
 
 layout l_pub_tech
   copy l_pub
+  map-header-bg on
   grid bottom
   grid-size 25 25 25 m
   grid-coords off

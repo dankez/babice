@@ -87,6 +87,7 @@ endlayout
 
 layout new_layout_jeskyne_tech
   copy new_layout_jeskyne
+  map-header-bg on
   grid bottom
   grid-size 25 25 25 m
   grid-coords off
