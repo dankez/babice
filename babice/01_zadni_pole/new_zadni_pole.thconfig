@@ -65,8 +65,23 @@ layout new_layout_zadni_pole
       }\vskip3mm
       
       {\the\legendtextsectionsize\bf VYSVĚTLIVKY}\vskip1.5mm
-      {\size[7.5]\formattedlegend}\vskip2mm
+      {\size[7.5]\insertlegend}\vskip2mm
       \color[0 0 0]
+    }
+
+    \let\origmaplayout=\maplayout
+    \def\maplayout{%
+      \origmaplayout
+      \advance\extraS by 2.5cm
+      \advance\extraE by 2.5cm
+      \ifcolorlegend
+        \legendbox{95}{5}{SE}{%
+          \hsize=4.5cm
+          \color[0 0 0]
+          {\the\legendtextsectionsize\bf\the\colorlegendtitle}\vskip2mm
+          \insertcolorlegend
+        }%
+      \fi
     }
   endcode
 
