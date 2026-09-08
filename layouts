@@ -141,3 +141,97 @@ layout l_plan_esri
   copy l_esri
 endlayout
 
+layout l_pub
+  scale 1 200
+  transparency on
+  opacity 85
+  layers on
+  language cz
+  legend on
+  symbol-set UIS
+  color map-bg 100
+  color map-fg [92 88 82]
+  map-header-bg off
+
+  code tex-map
+    \legendtextheadersize={\size[16]}
+    \legendtextsectionsize={\size[10]}
+    \legendtextsize={\size[8]}
+  endcode
+
+  code metapost
+    def s_northarrow_PUB (expr rot) =
+      T:=identity scaled 0.65 rotated -rot;
+      pickup PenC;
+      thfill (-0.35cm,-0.7cm)--(0,1.3cm)--(0,-0.35cm)--cycle withcolor (0.15, 0.15, 0.15);
+      thfill (0.35cm,-0.7cm)--(0,1.3cm)--(0,-0.35cm)--cycle withcolor (1, 1, 1);
+      thdraw (-0.35cm,-0.7cm)--(0,1.3cm)--(0.35cm,-0.7cm)--(0,-0.35cm)--cycle withcolor (0.15, 0.15, 0.15);
+      thdraw (0,-0.35cm)--(0,1.3cm) withcolor (0.15, 0.15, 0.15);
+    enddef;
+    initsymbol("s_northarrow_PUB");
+
+    def s_scalebar_PUB (expr l, units, txt) =
+      begingroup
+        save sb_l, sb_h, sb_i, p_a, p_b, p_c, p_d;
+        numeric sb_l, sb_h, sb_i;
+        pair p_a, p_b, p_c, p_d;
+
+        sb_l := l / Scale * cm * units;
+        sb_h := 3.2bp;
+
+        pickup pencircle scaled 0.4bp;
+
+        for sb_i = 0 upto 3:
+          p_a := (sb_i * sb_l / 4, 0);
+          p_b := ((sb_i + 1) * sb_l / 4, 0);
+          p_c := ((sb_i + 1) * sb_l / 4, sb_h);
+          p_d := (sb_i * sb_l / 4, sb_h);
+
+          if ((sb_i = 0) or (sb_i = 2)):
+            thfill (p_a -- p_b -- p_c -- p_d -- cycle) withcolor (0.15, 0.15, 0.15);
+          else:
+            thfill (p_a -- p_b -- p_c -- p_d -- cycle) withcolor (1, 1, 1);
+          fi;
+          thdraw (p_a -- p_b -- p_c -- p_d -- cycle) withcolor (0.15, 0.15, 0.15);
+        endfor;
+
+        draw (0, 0) -- (0, -2.5bp) withcolor (0.15, 0.15, 0.15);
+        draw (sb_l / 4, 0) -- (sb_l / 4, -2.5bp) withcolor (0.15, 0.15, 0.15);
+        draw (sb_l / 2, 0) -- (sb_l / 2, -2.5bp) withcolor (0.15, 0.15, 0.15);
+        draw (sb_l, 0) -- (sb_l, -2.5bp) withcolor (0.15, 0.15, 0.15);
+
+        interim labeloffset := 3.5bp;
+        label.bot(thTEX("\size[8]0"), (0, -2.5bp));
+        label.bot(thTEX("\size[8]" & decimal (round(l / 4))), (sb_l / 4, -2.5bp));
+        label.bot(thTEX("\size[8]" & decimal (round(l / 2))), (sb_l / 2, -2.5bp));
+        label.bot(thTEX("\size[8]" & decimal (round(l)) & "\thinspace" & txt), (sb_l, -2.5bp));
+
+        label.top(thTEX("\size[8.5]\bf 1 : " & decimal round(Scale * 100)), (sb_l / 2, sb_h + 1.5bp));
+      endgroup
+    enddef;
+    initsymbol("s_scalebar_PUB");
+
+    def l_survey_cave (expr p) =
+      draw p withpen PenD dashed evenly withcolor (0.4, 0.4, 0.4);
+    enddef;
+  endcode
+
+  symbol-assign special north-arrow PUB
+  symbol-assign special scale-bar PUB
+
+endlayout
+
+layout l_pub_tech
+  copy l_pub
+  grid bottom
+  grid-size 25 25 25 m
+  grid-coords off
+  code tex-map
+    \framethickness=0.8mm
+    \legendtextheadersize={\size[16]}
+    \legendtextsectionsize={\size[10]}
+    \legendtextsize={\size[8]}
+  endcode
+endlayout
+
+

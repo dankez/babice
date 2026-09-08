@@ -1,22 +1,12 @@
 encoding utf-8
+input ../../layouts
 source zadni_pole.th
 select zadni_pole.m@zadni_pole
 
 layout new_layout_zadni_pole
+  copy l_pub
 
   scale 1 250
-  language cz
-  transparency on
-  opacity 80
-  layers on
-
-  # Čistý bílý papír pro publikaci
-  color map-bg 100
-  # Příjemná pastelová vápencová výplň chodeb
-  color map-fg [92 88 82]
-
-  # Znaková sada UIS s realistickými texturami
-  symbol-set UIS
 
   symbol-assign area blocks AUT
   symbol-assign area clay AUT
@@ -26,7 +16,6 @@ layout new_layout_zadni_pole
   symbol-assign point stalagmite AUT
   symbol-assign point stalactite AUT
 
-  # Přírodní pastelové barvy pro speleologické výplně
   symbol-color point entrance [75 15 15]
   symbol-color area water [15 45 75]
   symbol-color line water-flow [15 45 75]
@@ -40,51 +29,20 @@ layout new_layout_zadni_pole
   symbol-hide point station-name
   symbol-hide point label
 
-  # Pozice záhlaví a legendy
-  map-header 0 95 nw
-  map-header-bg on
+  # Pozice záhlaví a legendy v severozápadním rohu s průhledným pozadím
+  map-header 2 98 nw
+  map-header-bg off
   legend on
-  legend-width 24 cm
-  legend-columns 2
+  legend-width 22 cm
+  legend-columns 3
 
   # Měřítko a severka
   scale-bar 20 m
 
-  # Metapost: moderní grafické měřítko a decentní polygony
-  code metapost
-    def s_scalebar_NEW (expr l, units, txt) = 
-      begingroup
-        interim warningcheck:=0;
-        tmpl:=l / Scale * cm * units / 2;
-      endgroup;
-      pickup PenB;
-      draw (-tmpl,0)--(tmpl,0);
-      draw (-tmpl,0)--(-tmpl,3bp);
-      draw (tmpl,0)--(tmpl,3bp);
-      draw (0,0)--(0,3bp);
-      begingroup
-        interim labeloffset:=4bp;
-        label.top(thTEX("\size[10]\rm 0"),(-tmpl,0));
-        label.top(thTEX("\size[10]\rm " & decimal (l/2)),origin);
-        label.top(thTEX("\size[10]\rm " & decimal (l) & "\thinspace " & txt),(tmpl,0));
-      endgroup
-    enddef;
-    initsymbol("s_scalebar_NEW");
-
-    def l_survey_cave (expr P) =
-      T:=identity;
-      pickup PenD;
-      thdraw P dashed evenly withcolor (0.55, 0.55, 0.55);
-    enddef;
-  endcode
-
-  symbol-assign special scale-bar NEW
-
-  # TeX: elegantní a čitelné záhlaví pro tisk / publikaci
   code tex-map
-    \legendtextsize={\size[9]}
-    \legendtextheadersize={\size[18]}
-    \legendtextsectionsize={\size[11]}
+    \legendtextheadersize={\size[16]}
+    \legendtextsectionsize={\size[10]}
+    \legendtextsize={\size[8]}
 
     \legendcontent={%
       \hsize=\legendwidth
@@ -92,22 +50,22 @@ layout new_layout_zadni_pole
       \ifnortharrow\vbox to 0pt{\line{\hfil\northarrow}\vss}\fi
       
       {\the\legendtextheadersize\bf ZÁVRTOVÁ SKUPINA ZADNÍ POLE}\vskip2mm
-      {\size[11]\it Babická plošina \enspace|\enspace Moravský kras \enspace|\enspace k. ú. Babice nad Svitavou}\vskip1mm
-      {\size[9]\rm Jeskyně 1318 Větrná propast \enspace|\enspace 1303 Dvanáctka \enspace|\enspace 1319 Devítka}\vskip4mm
+      {\size[10]\it Babická plošina \enspace|\enspace Moravský kras \enspace|\enspace k. ú. Babice nad Svitavou}\vskip1mm
+      {\size[8.5]\rm Jeskyně 1318 Větrná propast \enspace|\enspace 1303 Dvanáctka \enspace|\enspace 1319 Devítka}\vskip3mm
       
-      \ifscalebar\scalebar\vskip5mm\fi
+      \ifscalebar\scalebar\vskip4mm\fi
       
-      {\rightskip=0pt plus 2em\parskip=2bp\size[9]
+      {\rightskip=0pt plus 2em\parskip=2bp\size[8]
         \everypar{\hangindent=1.5em\hangafter=1}
         {\bf Celková délka polygonu skupiny:} \ss 934 m\par
         {\bf Hloubka / denivelace:} \ss 124,5 m\par
         {\bf Nadmořská výška vchodů:} \ss 526--528 m n. m.\par
         {\bf Měřické práce a mapování:} \rm ZO ČSS 6-28 Babická speleologická skupina (1974-2022)\par
         {\bf Zpracování dat a kartografie:} \rm Therion (2026)\par
-      }\vskip4mm
+      }\vskip3mm
       
-      {\the\legendtextsectionsize\bf VYSVĚTLIVKY}\vskip2mm
-      {\size[8]\formattedlegend}\vskip2mm
+      {\the\legendtextsectionsize\bf VYSVĚTLIVKY}\vskip1.5mm
+      {\size[7.5]\formattedlegend}\vskip2mm
       \color[0 0 0]
     }
   endcode
@@ -124,6 +82,45 @@ layout new_layout_zadni_pole_alt
   color map-fg altitude
 endlayout
 
+layout new_layout_zadni_pole_tech
+  copy new_layout_zadni_pole
+  grid bottom
+  grid-size 25 25 25 m
+  grid-coords off
+  code tex-map
+    \framethickness=0.8mm
+    \legendtextheadersize={\size[16]}
+    \legendtextsectionsize={\size[10]}
+    \legendtextsize={\size[8]}
+
+    \legendcontent={%
+      \hsize=\legendwidth
+      \color[0 0 0]\the\legendtextcolor
+      \ifnortharrow\vbox to 0pt{\line{\hfil\northarrow}\vss}\fi
+      
+      {\the\legendtextheadersize\bf ZÁVRTOVÁ SKUPINA ZADNÍ POLE}\vskip2mm
+      {\size[10]\it Babická plošina \enspace|\enspace Moravský kras \enspace|\enspace k. ú. Babice nad Svitavou}\vskip1mm
+      {\size[8.5]\rm Jeskyně 1318 Větrná propast \enspace|\enspace 1303 Dvanáctka \enspace|\enspace 1319 Devítka}\vskip3mm
+      
+      \ifscalebar\scalebar\vskip4mm\fi
+      
+      {\rightskip=0pt plus 2em\parskip=2bp\size[8]
+        \everypar{\hangindent=1.5em\hangafter=1}
+        {\bf Celková délka polygonu skupiny:} \ss 934 m\par
+        {\bf Hloubka / denivelace:} \ss 124,5 m\par
+        {\bf Nadmořská výška vchodů:} \ss 526--528 m n. m.\par
+        {\bf Měřické práce a mapování:} \rm ZO ČSS 6-28 Babická speleologická skupina (1974-2022)\par
+        {\bf Zpracování dat a kartografie:} \rm Therion (2026)\par
+      }\vskip3mm
+      
+      {\the\legendtextsectionsize\bf VYSVĚTLIVKY}\vskip1.5mm
+      {\size[7.5]\formattedlegend}\vskip2mm
+      \color[0 0 0]
+    }
+  endcode
+endlayout
+
 # Exporty pro publikaci s prefixem new_
 export map -projection plan -output _output/new_zadni_pole_plan.pdf -layout new_layout_zadni_pole
 export map -projection plan -output _output/new_zadni_pole_alt.pdf -layout new_layout_zadni_pole_alt
+export map -projection plan -output _output/new_zadni_pole_tech.pdf -layout new_layout_zadni_pole_tech
