@@ -17,10 +17,12 @@ layout l_plan
 endlayout
 
 # Mapa
-export map -projection plan -output _output/skalky_plan.pdf -layout l_default
+# export map -projection plan -output _output/skalky_plan.pdf -layout l_default
+export map -projection plan -output _output/new_skalky_plan.pdf -layout l_plan
 
 # ESRI
 export map -format esri -output _output/skalky.shp -layout l_plan_esri
+
 
 # 3D
 export model -format survex -output _output/skalky.3d

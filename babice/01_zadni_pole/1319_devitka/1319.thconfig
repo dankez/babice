@@ -1,7 +1,7 @@
 encoding  utf-8
 source 1319.th
-select m_1319@1319
-select m_1319_rez@1319
+select 1319.m@1319
+select 1319_rez.m@1319
 
 input ../../../layouts
 
@@ -25,8 +25,11 @@ layout l_rez
 endlayout
 
 # Mapa
-export map -projection extended -output _output/1319_rez.pdf -layout l_rez
-export map -output _output/1319_plan.pdf -layout l_plan
+# export map -projection extended -output _output/1319_rez.pdf -layout l_rez
+# export map -output _output/1319_plan.pdf -layout l_plan
+export map -projection extended -output _output/new_1319_rez.pdf -layout l_rez
+export map -output _output/new_1319_plan.pdf -layout l_plan
+
 # 3D
 export model -format survex -output _output/1319.3d
 export model -output _output/1319.lox

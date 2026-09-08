@@ -22,8 +22,11 @@ layout l_plan_alt
 endlayout
 
 # Mapa
-export map -projection plan -output _output/zp_plan.pdf -layout l_plan
-export map -projection plan -output _output/zp_plan_alt.pdf -layout l_plan_alt
+# export map -projection plan -output _output/zp_plan.pdf -layout l_plan
+# export map -projection plan -output _output/zp_plan_alt.pdf -layout l_plan_alt
+export map -projection plan -output _output/new_zp_plan.pdf -layout l_plan
+export map -projection plan -output _output/new_zp_plan_alt.pdf -layout l_plan_alt
+
 
 # GIS
 export map -format esri -output _output/zp.shp

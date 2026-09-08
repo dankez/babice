@@ -129,3 +129,15 @@ layout l_default_xvi
 
 endlayout
 
+layout l_plan_obrysy
+  copy l_default
+  scale 1 2000
+  symbol-hide point label
+  doc-author "ZO ČSS 6-28 Babická speleologická skupina"
+  doc-title "Babická plošina - přehledová mapa"
+endlayout
+
+layout l_plan_esri
+  copy l_esri
+endlayout
+
